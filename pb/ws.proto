@@ -1,0 +1,19 @@
+syntax = "proto3";
+package pb;
+
+import "google/api/annotations.proto";
+
+message Empty {
+}
+
+message Response {
+    string value = 1;
+}
+
+service WebsocketService {
+    rpc Echo (Empty) returns (stream Response) {
+        option (google.api.http) = {
+            get: "/ws/echo"
+        };
+    }
+}
