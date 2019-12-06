@@ -19,7 +19,7 @@ func (s *Service) NetInfo(context.Context, *empty.Empty) (*pb.NetInfoResponse, e
 }
 
 func (s *Service) MinGasPrice(context.Context, *empty.Empty) (*pb.MinGasPriceResponse, error) {
-	panic("implement me")
+	return &pb.MinGasPriceResponse{Jsonrpc: "2.0", Result: "1"}, nil
 }
 
 func (s *Service) Genesis(context.Context, *empty.Empty) (*pb.GenesisResponse, error) {

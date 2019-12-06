@@ -510,7 +510,18 @@
       }
     },
     "pbMinGasPriceResponse": {
-      "type": "object"
+      "type": "object",
+      "properties": {
+        "jsonrpc": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "result": {
+          "type": "string"
+        }
+      }
     },
     "pbNetInfoResponse": {
       "type": "object",

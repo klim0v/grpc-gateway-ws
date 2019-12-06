@@ -180,7 +180,9 @@ message GenesisResponse {
 }
 
 message MinGasPriceResponse {
-
+    string jsonrpc = 1;
+    string id = 2;
+    string result = 3;
 }
 
 service HttpService {
