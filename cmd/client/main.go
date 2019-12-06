@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	u := url.URL{Scheme: "ws", Host: "localhost:8000", Path: "/ws/echo"}
+	u := url.URL{Scheme: "ws", Host: "localhost:8000", Path: "/subscribe"}
 	log.Printf("connecting to %s", u.String())
 
 	c, resp, err := websocket.DefaultDialer.Dial(u.String(), nil)

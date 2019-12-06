@@ -1,9 +1,10 @@
 package main
 
 import (
-	"context" // Use "golang.org/x/net/context" for Golang version <= 1.6
+	"context"
 	"fmt"
 	"github.com/klim0v/grpc-gateway-ws/service"
+	"golang.org/x/sync/errgroup"
 	"google.golang.org/grpc"
 	"log"
 	"net"
@@ -11,7 +12,7 @@ import (
 
 	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
-	gw "github.com/klim0v/grpc-gateway-ws/pb" // Update
+	gw "github.com/klim0v/grpc-gateway-ws/pb"
 	"github.com/tmc/grpc-websocket-proxy/wsproxy"
 )
 
@@ -21,7 +22,8 @@ func startGRPC() error {
 		return err
 	}
 	grpcServer := grpc.NewServer()
-	gw.RegisterWebsocketServiceServer(grpcServer, &service.WebsocketService{})
+	gw.RegisterWebsocketServiceServer(grpcServer, &service.Service{})
+	gw.RegisterHttpServiceServer(grpcServer, &service.Service{})
 	go func() {
 		if err := grpcServer.Serve(lis); err != nil {
 			log.Println("serveGRPC err:", err)
@@ -37,14 +39,30 @@ func run() error {
 
 	mux := runtime.NewServeMux()
 	opts := []grpc.DialOption{grpc.WithInsecure()}
-	err := gw.RegisterWebsocketServiceHandlerFromEndpoint(ctx, mux, ":8081", opts)
-	if err != nil {
+
+	if err := gw.RegisterWebsocketServiceHandlerFromEndpoint(ctx, mux, ":8081", opts); err != nil {
+		return err
+	}
+
+	if err := gw.RegisterHttpServiceHandlerFromEndpoint(ctx, mux, ":8081", opts); err != nil {
 		return err
 	}
 
 	fmt.Println("listening")
 
-	return http.ListenAndServe(":8000", wsproxy.WebsocketProxy(mux))
+	var group errgroup.Group
+	group.Go(func() error {
+		return http.ListenAndServe(":8000", mux)
+	})
+	group.Go(func() error {
+		return http.ListenAndServe(":8000", wsproxy.WebsocketProxy(mux))
+	})
+
+	if err := group.Wait(); err != nil {
+		return err
+	}
+
+	return nil
 }
 
 func main() {

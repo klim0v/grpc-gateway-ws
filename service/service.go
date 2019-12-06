@@ -1,23 +1,19 @@
 package service
 
 import (
-	"fmt"
-	"github.com/klim0v/grpc-gateway-ws/pb"
-	"time"
+	"github.com/MinterTeam/minter-go-node/config"
+	"github.com/MinterTeam/minter-go-node/core/minter"
+	"github.com/tendermint/go-amino"
+	rpc "github.com/tendermint/tendermint/rpc/client"
 )
 
-type WebsocketService struct {
+type Service struct {
+	cdc        *amino.Codec
+	blockchain *minter.Blockchain
+	client     *rpc.Local
+	minterCfg  *config.Config
 }
 
-func (w *WebsocketService) Echo(_ *pb.Empty, stream pb.WebsocketService_EchoServer) error {
-	start := time.Now()
-	for i := 0; i < 5; i++ {
-		time.Sleep(time.Second)
-		if err := stream.Send(&pb.Response{
-			Value: "hello there!" + fmt.Sprint(time.Now().Sub(start)),
-		}); err != nil {
-			return err
-		}
-	}
-	return nil
+func NewService(blockchain *minter.Blockchain, client *rpc.Local, minterCfg *config.Config) *Service {
+	return &Service{blockchain: blockchain, client: client, minterCfg: minterCfg, cdc: amino.NewCodec()}
 }

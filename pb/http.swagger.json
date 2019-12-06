@@ -1,0 +1,626 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "title": "http.proto",
+    "version": "version not set"
+  },
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/genesis": {
+      "get": {
+        "operationId": "Genesis",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbGenesisResponse"
+            }
+          }
+        },
+        "tags": [
+          "HttpService"
+        ]
+      }
+    },
+    "/min_gas_price": {
+      "get": {
+        "operationId": "MinGasPrice",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbMinGasPriceResponse"
+            }
+          }
+        },
+        "tags": [
+          "HttpService"
+        ]
+      }
+    },
+    "/net_info": {
+      "get": {
+        "operationId": "NetInfo",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbNetInfoResponse"
+            }
+          }
+        },
+        "tags": [
+          "HttpService"
+        ]
+      }
+    },
+    "/status": {
+      "get": {
+        "operationId": "Status",
+        "responses": {
+          "200": {
+            "description": "A successful response.",
+            "schema": {
+              "$ref": "#/definitions/pbStatusResponse"
+            }
+          }
+        },
+        "tags": [
+          "HttpService"
+        ]
+      }
+    }
+  },
+  "definitions": {
+    "AccountBalance": {
+      "type": "object",
+      "properties": {
+        "coin": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "AppStateAccount": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "balance": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AccountBalance"
+          }
+        },
+        "nonce": {
+          "type": "string"
+        }
+      }
+    },
+    "AppStateCandidates": {
+      "type": "object",
+      "properties": {
+        "reward_address": {
+          "type": "string"
+        },
+        "owner_address": {
+          "type": "string"
+        },
+        "total_bip_stake": {
+          "type": "string"
+        },
+        "pub_key": {
+          "type": "string"
+        },
+        "commission": {
+          "type": "string"
+        },
+        "stakes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/CandidatesStake"
+          }
+        },
+        "created_at_block": {
+          "type": "string"
+        },
+        "status": {
+          "type": "number",
+          "format": "double"
+        }
+      }
+    },
+    "CandidatesStake": {
+      "type": "object",
+      "properties": {
+        "owner": {
+          "type": "string"
+        },
+        "coin": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        },
+        "bip_value": {
+          "type": "string"
+        }
+      }
+    },
+    "ConnectionStatusChannel": {
+      "type": "object",
+      "properties": {
+        "ID": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "SendQueueCapacity": {
+          "type": "string",
+          "format": "int64"
+        },
+        "SendQueueSize": {
+          "type": "string",
+          "format": "int64"
+        },
+        "Priority": {
+          "type": "string",
+          "format": "int64"
+        },
+        "RecentlySent": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "ConnectionStatusMonitor": {
+      "type": "object",
+      "properties": {
+        "Active": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "Start": {
+          "type": "string"
+        },
+        "Duration": {
+          "type": "string",
+          "format": "int64"
+        },
+        "Idle": {
+          "type": "string",
+          "format": "int64"
+        },
+        "Bytes": {
+          "type": "string",
+          "format": "int64"
+        },
+        "Samples": {
+          "type": "string",
+          "format": "int64"
+        },
+        "InstRate": {
+          "type": "string",
+          "format": "int64"
+        },
+        "CurRate": {
+          "type": "string",
+          "format": "int64"
+        },
+        "AvgRate": {
+          "type": "string",
+          "format": "int64"
+        },
+        "PeakRate": {
+          "type": "string",
+          "format": "int64"
+        },
+        "BytesRem": {
+          "type": "string",
+          "format": "int64"
+        },
+        "TimeRem": {
+          "type": "string",
+          "format": "int64"
+        },
+        "Progress": {
+          "type": "integer",
+          "format": "int64"
+        }
+      }
+    },
+    "ConsensusParamsBlock": {
+      "type": "object",
+      "properties": {
+        "max_bytes": {
+          "type": "string"
+        },
+        "max_gas": {
+          "type": "string"
+        },
+        "time_iota_ms": {
+          "type": "string"
+        }
+      }
+    },
+    "ConsensusParamsEvidence": {
+      "type": "object",
+      "properties": {
+        "max_age": {
+          "type": "string"
+        }
+      }
+    },
+    "GenesisAppState": {
+      "type": "object",
+      "properties": {
+        "start_height": {
+          "type": "string"
+        },
+        "validators": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/GenesisAppStateValidator"
+          }
+        },
+        "candidates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppStateCandidates"
+          }
+        },
+        "accounts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/AppStateAccount"
+          }
+        },
+        "max_gas": {
+          "type": "string"
+        },
+        "total_slashed": {
+          "type": "string"
+        }
+      }
+    },
+    "GenesisAppStateValidator": {
+      "type": "object",
+      "properties": {
+        "reward_address": {
+          "type": "string"
+        },
+        "total_bip_stake": {
+          "type": "string"
+        },
+        "pub_key": {
+          "type": "string"
+        },
+        "commission": {
+          "type": "string"
+        },
+        "accum_reward": {
+          "type": "string"
+        },
+        "absent_times": {
+          "type": "string"
+        }
+      }
+    },
+    "GenesisConsensusParams": {
+      "type": "object",
+      "properties": {
+        "block": {
+          "$ref": "#/definitions/ConsensusParamsBlock"
+        },
+        "evidence": {
+          "$ref": "#/definitions/ConsensusParamsEvidence"
+        },
+        "validator": {
+          "$ref": "#/definitions/GenesisConsensusParamsValidator"
+        }
+      }
+    },
+    "GenesisConsensusParamsValidator": {
+      "type": "object",
+      "properties": {
+        "pub_key_types": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "NodeInfoOther": {
+      "type": "object",
+      "properties": {
+        "tx_index": {
+          "type": "string"
+        },
+        "rpc_address": {
+          "type": "string"
+        }
+      }
+    },
+    "NodeInfoProtocolVersion": {
+      "type": "object",
+      "properties": {
+        "p2p": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "block": {
+          "type": "string",
+          "format": "uint64"
+        },
+        "app": {
+          "type": "string",
+          "format": "uint64"
+        }
+      }
+    },
+    "PeerConnectionStatus": {
+      "type": "object",
+      "properties": {
+        "Duration": {
+          "type": "string",
+          "format": "int64"
+        },
+        "SendMonitor": {
+          "$ref": "#/definitions/ConnectionStatusMonitor"
+        },
+        "RecvMonitor": {
+          "$ref": "#/definitions/ConnectionStatusMonitor"
+        },
+        "Channels": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ConnectionStatusChannel"
+          }
+        }
+      }
+    },
+    "ResultGenesis": {
+      "type": "object",
+      "properties": {
+        "genesis_time": {
+          "type": "string"
+        },
+        "chain_id": {
+          "type": "string"
+        },
+        "consensus_params": {
+          "$ref": "#/definitions/GenesisConsensusParams"
+        },
+        "app_hash": {
+          "type": "string"
+        },
+        "app_state": {
+          "$ref": "#/definitions/GenesisAppState"
+        }
+      }
+    },
+    "ResultPeer": {
+      "type": "object",
+      "properties": {
+        "node_info": {
+          "$ref": "#/definitions/pbNodeInfo"
+        },
+        "is_outbound": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "connection_status": {
+          "$ref": "#/definitions/PeerConnectionStatus"
+        },
+        "remote_ip": {
+          "type": "string"
+        }
+      }
+    },
+    "ResultTmStatus": {
+      "type": "object",
+      "properties": {
+        "node_info": {
+          "$ref": "#/definitions/pbNodeInfo"
+        },
+        "sync_info": {
+          "$ref": "#/definitions/TmStatusSyncInfo"
+        },
+        "validator_info": {
+          "$ref": "#/definitions/TmStatusValidatorInfo"
+        }
+      }
+    },
+    "TmStatusSyncInfo": {
+      "type": "object",
+      "properties": {
+        "latest_block_hash": {
+          "type": "string"
+        },
+        "latest_app_hash": {
+          "type": "string"
+        },
+        "latest_block_height": {
+          "type": "string",
+          "format": "int64"
+        },
+        "latest_block_time": {
+          "type": "string"
+        },
+        "catching_up": {
+          "type": "boolean",
+          "format": "boolean"
+        }
+      }
+    },
+    "TmStatusValidatorInfo": {
+      "type": "object",
+      "properties": {
+        "address": {
+          "type": "string"
+        },
+        "pub_key": {
+          "$ref": "#/definitions/ValidatorInfoPubKey"
+        },
+        "voting_power": {
+          "type": "string",
+          "format": "int64"
+        }
+      }
+    },
+    "ValidatorInfoPubKey": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      }
+    },
+    "pbGenesisResponse": {
+      "type": "object",
+      "properties": {
+        "jsonrpc": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/definitions/pbGenesisResponseResult"
+        }
+      }
+    },
+    "pbGenesisResponseResult": {
+      "type": "object",
+      "properties": {
+        "genesis": {
+          "$ref": "#/definitions/ResultGenesis"
+        }
+      }
+    },
+    "pbMinGasPriceResponse": {
+      "type": "object"
+    },
+    "pbNetInfoResponse": {
+      "type": "object",
+      "properties": {
+        "jsonrpc": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/definitions/pbNetInfoResponseResult"
+        }
+      }
+    },
+    "pbNetInfoResponseResult": {
+      "type": "object",
+      "properties": {
+        "listening": {
+          "type": "boolean",
+          "format": "boolean"
+        },
+        "listeners": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "n_peers": {
+          "type": "string",
+          "format": "int64"
+        },
+        "peers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResultPeer"
+          }
+        }
+      }
+    },
+    "pbNodeInfo": {
+      "type": "object",
+      "properties": {
+        "protocol_version": {
+          "$ref": "#/definitions/NodeInfoProtocolVersion"
+        },
+        "id": {
+          "type": "string"
+        },
+        "listen_addr": {
+          "type": "string"
+        },
+        "network": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "channels": {
+          "type": "string"
+        },
+        "moniker": {
+          "type": "string"
+        },
+        "other": {
+          "$ref": "#/definitions/NodeInfoOther"
+        }
+      }
+    },
+    "pbStatusResponse": {
+      "type": "object",
+      "properties": {
+        "jsonrpc": {
+          "type": "string"
+        },
+        "id": {
+          "type": "string"
+        },
+        "result": {
+          "$ref": "#/definitions/pbStatusResponseResult"
+        }
+      }
+    },
+    "pbStatusResponseResult": {
+      "type": "object",
+      "properties": {
+        "version": {
+          "type": "string"
+        },
+        "latest_block_hash": {
+          "type": "string"
+        },
+        "latest_app_hash": {
+          "type": "string"
+        },
+        "latest_block_height": {
+          "type": "string",
+          "format": "int64"
+        },
+        "latest_block_time": {
+          "type": "string"
+        },
+        "keep_last_states": {
+          "type": "string",
+          "format": "int64"
+        },
+        "tm_status": {
+          "$ref": "#/definitions/ResultTmStatus"
+        }
+      }
+    }
+  }
+}

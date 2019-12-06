@@ -1,0 +1,211 @@
+syntax = "proto3";
+package pb;
+
+import "google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+message NodeInfo {
+    message ProtocolVersion {
+        uint64 p2p = 3;
+        uint64 block = 1;
+        uint64 app = 2;
+    }
+    ProtocolVersion protocol_version = 8;
+    string id = 1;
+    string listen_addr = 2;
+    string network = 3;
+    string version = 4;
+    string channels = 5;
+    string moniker = 6;
+    message Other {
+        string tx_index = 2;
+        string rpc_address = 1;
+    }
+    Other other = 7;
+}
+
+message NetInfoResponse {
+    string jsonrpc = 1;
+    string id = 2;
+    message Result {
+        bool listening = 4;
+        repeated string listeners = 1;
+        int64 n_peers = 2;
+        message Peer {
+            NodeInfo node_info = 4;
+            bool is_outbound = 1;
+            message ConnectionStatus {
+                int64 Duration = 4;
+                message Monitor {
+                    bool Active = 13;
+                    string Start = 1;
+                    int64 Duration = 2;
+                    int64 Idle = 3;
+                    int64 Bytes = 4;
+                    int64 Samples = 5;
+                    int64 InstRate = 6;
+                    int64 CurRate = 7;
+                    int64 AvgRate = 8;
+                    int64 PeakRate = 9;
+                    int64 BytesRem = 10;
+                    int64 TimeRem = 11;
+                    uint32 Progress = 12;
+                }
+                Monitor SendMonitor = 1;
+                Monitor RecvMonitor = 2;
+                message Channel {
+                    int32 ID = 5;
+                    int64 SendQueueCapacity = 1;
+                    int64 SendQueueSize = 2;
+                    int64 Priority = 3;
+                    int64 RecentlySent = 4;
+                }
+                repeated Channel Channels = 3;
+            }
+            ConnectionStatus connection_status = 2;
+            string remote_ip = 3;
+        }
+        repeated Peer peers = 3;
+    }
+    Result result = 3;
+}
+
+message StatusResponse {
+    string jsonrpc = 1;
+    string id = 2;
+    message Result {
+        string version = 7;
+        string latest_block_hash = 1;
+        string latest_app_hash = 2;
+        int64 latest_block_height = 3;
+        string latest_block_time = 4;
+        int64 keep_last_states = 5;
+        message TmStatus {
+            NodeInfo node_info = 3;
+            message SyncInfo {
+                string latest_block_hash = 5;
+                string latest_app_hash = 1;
+                int64 latest_block_height = 2;
+                string latest_block_time = 3;
+                bool catching_up = 4;
+            }
+            SyncInfo sync_info = 1;
+            message ValidatorInfo {
+                string address = 3;
+                message PubKey {
+                    string type = 2;
+                    string value = 1;
+                }
+                PubKey pub_key = 1;
+                int64 voting_power = 2;
+            }
+            ValidatorInfo validator_info = 2;
+        }
+        TmStatus tm_status = 6;
+    }
+    Result result = 3;
+}
+
+message GenesisResponse {
+    string jsonrpc = 1;
+    string id = 2;
+    message Result {
+        message Genesis {
+            string genesis_time = 1;
+            string chain_id = 2;
+            message ConsensusParams {
+                message Block {
+                    string max_bytes = 1;
+                    string max_gas = 2;
+                    string time_iota_ms = 3;
+                }
+                Block block = 1;
+                message Evidence {
+                    string max_age = 1;
+                }
+                Evidence evidence = 2;
+                message Validator {
+                    repeated string pub_key_types = 1;
+                }
+                Validator validator = 3;
+            }
+            ConsensusParams consensus_params = 3;
+            string app_hash = 4;
+            message AppState {
+                string start_height = 1;
+                message Validator {
+                    string reward_address = 1;
+                    string total_bip_stake = 2;
+                    string pub_key = 3;
+                    string commission = 4;
+                    string accum_reward = 5;
+                    string absent_times = 6;
+                }
+                repeated Validator validators = 2;
+                message Candidates {
+                    string reward_address = 1;
+                    string owner_address = 2;
+                    string total_bip_stake = 3;
+                    string pub_key = 4;
+                    string commission = 5;
+                    message Stake {
+                        string owner = 1;
+                        string coin = 2;
+                        string value = 3;
+                        string bip_value = 4;
+                    }
+                    repeated Stake stakes = 6;
+                    string created_at_block = 7;
+                    double status = 8;
+                }
+                repeated Candidates candidates = 3;
+                message Account {
+                    string address = 1;
+                    message Balance {
+                        string coin = 1;
+                        string value = 2;
+                    }
+                    repeated Balance balance = 2;
+                    string nonce = 3;
+                }
+                repeated Account accounts = 4;
+                string max_gas = 5;
+                string total_slashed = 6;
+            }
+            AppState app_state = 5;
+        }
+        Genesis genesis = 1;
+    }
+    Result result = 3;
+}
+
+message MinGasPriceResponse {
+
+}
+
+service HttpService {
+    rpc Status (google.protobuf.Empty) returns (StatusResponse) {
+        option (google.api.http) = {
+            get: "/status"
+        };
+    }
+
+    rpc NetInfo (google.protobuf.Empty) returns (NetInfoResponse) {
+        option (google.api.http) = {
+            get: "/net_info"
+        };
+    }
+
+    rpc MinGasPrice (google.protobuf.Empty) returns (MinGasPriceResponse) {
+        option (google.api.http) = {
+            get: "/min_gas_price"
+        };
+    }
+
+    rpc Genesis (google.protobuf.Empty) returns (GenesisResponse) {
+        option (google.api.http) = {
+            get: "/genesis"
+        };
+    }
+
+}
