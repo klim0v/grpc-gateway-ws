@@ -29,7 +29,6 @@ message NodeInfo {
     }
     Other other = 7;
 }
-
 message NetInfoResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -75,7 +74,6 @@ message NetInfoResponse {
     }
     Result result = 3;
 }
-
 message StatusResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -111,7 +109,6 @@ message StatusResponse {
     }
     Result result = 3;
 }
-
 message GenesisResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -184,7 +181,6 @@ message GenesisResponse {
     }
     Result result = 3;
 }
-
 message MinGasPriceResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -194,7 +190,6 @@ message MinGasPriceResponse {
 message BlockRequest {
     int32 height = 1;
 }
-
 message BlockResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -248,7 +243,6 @@ message BlockResponse {
 message MaxGasRequest {
     int32 height = 1;
 }
-
 message MaxGasResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -259,7 +253,6 @@ message AddressRequest {
     string address = 1;
     int32 height = 2;
 }
-
 message AddressResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -274,7 +267,6 @@ message AddressesRequest {
     string pub_key = 1;
     int32 height = 2;
 }
-
 message AddressesResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -290,7 +282,6 @@ message CandidateRequest {
     string pub_key = 1;
     int32 height = 2;
 }
-
 message CandidateResult {
     string reward_address = 1;
     string total_stake = 2;
@@ -311,22 +302,20 @@ message CandidateResponse {
     CandidateResult result = 3;
 }
 
-
 message CandidatesRequest {
     int32 height = 1;
     bool include_stakes = 2;
 }
-
 message CandidatesResponse {
     string jsonrpc = 1;
     string id = 2;
     repeated CandidateResult result = 3;
 }
+
 message CoinInfoRequest {
     int32 height = 1;
     string symbol = 2;
 }
-
 message CoinInfoResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -340,10 +329,6 @@ message CoinInfoResponse {
     Result result = 3;
 }
 
-message SendTransactionRequest {
-    string tx = 1;
-}
-
 message SendTransactionResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -355,20 +340,32 @@ message SendTransactionResponse {
     }
     Result result = 3;
 }
-
 message SendTransactionRequest {
     string tx = 1;
 }
 
+message TransactionResult {
+    string hash = 1;
+    string raw_tx = 2;
+    int64 height = 3;
+    uint32 index = 4;
+    string from = 5;
+    uint64 nonce = 6;
+    int64 gas = 7;
+    uint32 gas_price = 8;
+    string gas_coin = 9;
+    uint32 type = 10;
+    bytes data = 11;
+    bytes payload = 12;
+    map<string, string> tags = 13;
+    uint32 code = 14;
+    string log = 15;
+}
 message TransactionResponse {
     string jsonrpc = 1;
     string id = 2;
-    message Result {
-        //todo
-    }
-    Result result = 3;
+    TransactionResult result = 3;
 }
-
 message TransactionRequest {
     string hash = 1;
 }
@@ -376,12 +373,8 @@ message TransactionRequest {
 message TransactionsResponse {
     string jsonrpc = 1;
     string id = 2;
-    message Result {
-        //todo
-    }
-    Result result = 3;
+    repeated TransactionResult result = 3;
 }
-
 message TransactionsRequest {
     string query = 1;
     int32 page = 2;
@@ -394,7 +387,6 @@ message EstimateCoinBuyRequest {
     string value_to_buy = 3;
     int32 height = 4;
 }
-
 message EstimateCoinBuyResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -411,7 +403,6 @@ message EstimateCoinSellRequest {
     string value_to_sell = 3;
     int32 height = 4;
 }
-
 message EstimateCoinSellResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -430,7 +421,6 @@ message EstimateCoinSellAllResponse {
     }
     Result result = 3;
 }
-
 message EstimateCoinSellAllRequest {
     double coin_to_sell = 1;
     double coin_to_buy = 2;
@@ -447,17 +437,14 @@ message EstimateTxCommissionResponse {
     }
     Result result = 3;
 }
-
 message EstimateTxCommissionRequest {
     string tx = 1;
     int32 height = 2;
 }
 
-
 message EventsRequest {
     int32 height = 1;
 }
-
 message EventsResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -471,12 +458,10 @@ message EventsResponse {
     Result result = 3;
 }
 
-
 message MissedBlocksRequest {
     string pub_key = 1;
     int32 height = 2;
 }
-
 message MissedBlocksResponse {
     string jsonrpc = 1;
     string id = 2;
@@ -498,7 +483,6 @@ message UnconfirmedTxsResponse {
     }
     Result result = 3;
 }
-
 message UnconfirmedTxsRequest {
     int32 limit = 1;
 }
@@ -506,7 +490,6 @@ message UnconfirmedTxsRequest {
 message ValidatorsRequest {
     int32 height = 1;
 }
-
 message ValidatorsResponse {
     string jsonrpc = 1;
     string id = 2;

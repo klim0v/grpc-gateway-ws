@@ -77,20 +77,6 @@
     }
   },
   "definitions": {
-    "SubscribeResponseEvent": {
-      "type": "object",
-      "properties": {
-        "key": {
-          "type": "string"
-        },
-        "events": {
-          "type": "array",
-          "items": {
-            "type": "string"
-          }
-        }
-      }
-    },
     "pbSubscribeResponse": {
       "type": "object",
       "properties": {
@@ -103,7 +89,21 @@
         "events": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/SubscribeResponseEvent"
+            "$ref": "#/definitions/pbSubscribeResponseEvent"
+          }
+        }
+      }
+    },
+    "pbSubscribeResponseEvent": {
+      "type": "object",
+      "properties": {
+        "key": {
+          "type": "string"
+        },
+        "events": {
+          "type": "array",
+          "items": {
+            "type": "string"
           }
         }
       }
