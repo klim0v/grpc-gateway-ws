@@ -745,16 +745,16 @@
           "format": "int32"
         },
         "SendQueueCapacity": {
-          "type": "string",
-          "format": "int64"
+          "type": "integer",
+          "format": "int32"
         },
         "SendQueueSize": {
-          "type": "string",
-          "format": "int64"
+          "type": "integer",
+          "format": "int32"
         },
         "Priority": {
-          "type": "string",
-          "format": "int64"
+          "type": "integer",
+          "format": "int32"
         },
         "RecentlySent": {
           "type": "string",
@@ -1589,8 +1589,8 @@
           }
         },
         "n_peers": {
-          "type": "string",
-          "format": "int64"
+          "type": "integer",
+          "format": "int32"
         },
         "peers": {
           "type": "array",

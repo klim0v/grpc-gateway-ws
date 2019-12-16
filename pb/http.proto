@@ -35,7 +35,7 @@ message NetInfoResponse {
     message Result {
         bool listening = 4;
         repeated string listeners = 1;
-        int64 n_peers = 2;
+        int32 n_peers = 2;
         message Peer {
             NodeInfo node_info = 4;
             bool is_outbound = 1;
@@ -60,9 +60,9 @@ message NetInfoResponse {
                 Monitor RecvMonitor = 2;
                 message Channel {
                     int32 ID = 5;
-                    int64 SendQueueCapacity = 1;
-                    int64 SendQueueSize = 2;
-                    int64 Priority = 3;
+                    int32 SendQueueCapacity = 1;
+                    int32 SendQueueSize = 2;
+                    int32 Priority = 3;
                     int64 RecentlySent = 4;
                 }
                 repeated Channel Channels = 3;
