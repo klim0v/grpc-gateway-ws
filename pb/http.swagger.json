@@ -55,7 +55,7 @@
         },
         "parameters": [
           {
-            "name": "pub_key",
+            "name": "public_key",
             "in": "query",
             "required": false,
             "type": "string"
@@ -111,7 +111,7 @@
         },
         "parameters": [
           {
-            "name": "pub_key",
+            "name": "public_key",
             "in": "query",
             "required": false,
             "type": "string"
@@ -459,7 +459,7 @@
         },
         "parameters": [
           {
-            "name": "pub_key",
+            "name": "public_key",
             "in": "query",
             "required": false,
             "type": "string"
@@ -687,7 +687,7 @@
         "total_bip_stake": {
           "type": "string"
         },
-        "pub_key": {
+        "public_key": {
           "type": "string"
         },
         "commission": {
@@ -728,7 +728,7 @@
     "BlockResponseResultValidator": {
       "type": "object",
       "properties": {
-        "pub_key": {
+        "public_key": {
           "type": "string"
         },
         "signed": {
@@ -895,7 +895,7 @@
         "total_bip_stake": {
           "type": "string"
         },
-        "pub_key": {
+        "public_key": {
           "type": "string"
         },
         "commission": {
@@ -926,7 +926,7 @@
     "GenesisConsensusParamsValidator": {
       "type": "object",
       "properties": {
-        "pub_key_types": {
+        "public_key_types": {
           "type": "array",
           "items": {
             "type": "string"
@@ -1109,7 +1109,7 @@
         "address": {
           "type": "string"
         },
-        "pub_key": {
+        "public_key": {
           "$ref": "#/definitions/ValidatorInfoPubKey"
         },
         "voting_power": {
@@ -1154,6 +1154,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbAddressResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1182,6 +1185,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbAddressesResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1214,6 +1220,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbBlockResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1269,6 +1278,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbCandidateResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1281,7 +1293,7 @@
         "total_stake": {
           "type": "string"
         },
-        "pub_key": {
+        "public_key": {
           "type": "string"
         },
         "commission": {
@@ -1330,6 +1342,9 @@
           "items": {
             "$ref": "#/definitions/pbCandidateResult"
           }
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1344,6 +1359,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbCoinInfoResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1367,6 +1385,21 @@
         }
       }
     },
+    "pbError": {
+      "type": "object",
+      "properties": {
+        "code": {
+          "type": "integer",
+          "format": "int32"
+        },
+        "message": {
+          "type": "string"
+        },
+        "data": {
+          "type": "string"
+        }
+      }
+    },
     "pbEstimateCoinBuyResponse": {
       "type": "object",
       "properties": {
@@ -1378,6 +1411,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbEstimateCoinBuyResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1403,6 +1439,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbEstimateCoinSellAllResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1425,6 +1464,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbEstimateCoinSellResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1450,6 +1492,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbEstimateTxCommissionResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1472,6 +1517,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbEventsResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1497,6 +1545,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbGenesisResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1519,6 +1570,9 @@
         },
         "result": {
           "type": "string"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1533,6 +1587,9 @@
         },
         "result": {
           "type": "string"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1547,6 +1604,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbMissedBlocksResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1572,6 +1632,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbNetInfoResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1640,6 +1703,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbSendTransactionResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1672,6 +1738,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbStatusResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1714,6 +1783,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbTransactionResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1793,6 +1865,9 @@
           "items": {
             "$ref": "#/definitions/pbTransactionResult"
           }
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1807,6 +1882,9 @@
         },
         "result": {
           "$ref": "#/definitions/pbUnconfirmedTxsResponseResult"
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
@@ -1844,13 +1922,16 @@
           "items": {
             "$ref": "#/definitions/pbValidatorsResponseResult"
           }
+        },
+        "error": {
+          "$ref": "#/definitions/pbError"
         }
       }
     },
     "pbValidatorsResponseResult": {
       "type": "object",
       "properties": {
-        "pub_key": {
+        "public_key": {
           "type": "string"
         },
         "voting_power": {

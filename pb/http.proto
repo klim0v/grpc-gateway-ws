@@ -73,6 +73,7 @@ message NetInfoResponse {
         repeated Peer peers = 3;
     }
     Result result = 3;
+    Error error = 4;
 }
 message StatusResponse {
     string jsonrpc = 1;
@@ -100,7 +101,7 @@ message StatusResponse {
                     string type = 2;
                     string value = 1;
                 }
-                PubKey pub_key = 1;
+                PubKey public_key = 1;
                 int64 voting_power = 2;
             }
             ValidatorInfo validator_info = 2;
@@ -108,6 +109,7 @@ message StatusResponse {
         TmStatus tm_status = 6;
     }
     Result result = 3;
+    Error error = 4;
 }
 message GenesisResponse {
     string jsonrpc = 1;
@@ -128,7 +130,7 @@ message GenesisResponse {
                 }
                 Evidence evidence = 2;
                 message Validator {
-                    repeated string pub_key_types = 1;
+                    repeated string public_key_types = 1;
                 }
                 Validator validator = 3;
             }
@@ -139,7 +141,7 @@ message GenesisResponse {
                 message Validator {
                     string reward_address = 1;
                     string total_bip_stake = 2;
-                    string pub_key = 3;
+                    string public_key = 3;
                     string commission = 4;
                     string accum_reward = 5;
                     string absent_times = 6;
@@ -149,7 +151,7 @@ message GenesisResponse {
                     string reward_address = 1;
                     string owner_address = 2;
                     string total_bip_stake = 3;
-                    string pub_key = 4;
+                    string public_key = 4;
                     string commission = 5;
                     message Stake {
                         string owner = 1;
@@ -180,11 +182,13 @@ message GenesisResponse {
         Genesis genesis = 1;
     }
     Result result = 3;
+    Error error = 4;
 }
 message MinGasPriceResponse {
     string jsonrpc = 1;
     string id = 2;
     string result = 3;
+    Error error = 4;
 }
 
 message BlockRequest {
@@ -193,7 +197,6 @@ message BlockRequest {
 message BlockResponse {
     string jsonrpc = 1;
     string id = 2;
-
     message Result {
         string hash = 1;
         string height = 2;
@@ -230,14 +233,14 @@ message BlockResponse {
         string proposer = 9;
 
         message Validator {
-            string pub_key = 1;
+            string public_key = 1;
             bool signed = 2;
         }
 
         repeated Validator validators = 10;
     }
-
     Result result = 3;
+    Error error = 4;
 }
 
 message MaxGasRequest {
@@ -247,6 +250,7 @@ message MaxGasResponse {
     string jsonrpc = 1;
     string id = 2;
     string result = 3;
+    Error error = 4;
 }
 
 message AddressRequest {
@@ -261,10 +265,11 @@ message AddressResponse {
         string transaction_count = 2;
     }
     Result result = 3;
+    Error error = 4;
 }
 
 message AddressesRequest {
-    string pub_key = 1;
+    string public_key = 1;
     int32 height = 2;
 }
 message AddressesResponse {
@@ -276,16 +281,17 @@ message AddressesResponse {
         int64 transaction_count = 3;
     }
     Result result = 3;
+    Error error = 4;
 }
 
 message CandidateRequest {
-    string pub_key = 1;
+    string public_key = 1;
     int32 height = 2;
 }
 message CandidateResult {
     string reward_address = 1;
     string total_stake = 2;
-    string pub_key = 3;
+    string public_key = 3;
     string commission = 4;
     message Stake {
         string owner = 1;
@@ -300,6 +306,7 @@ message CandidateResponse {
     string jsonrpc = 1;
     string id = 2;
     CandidateResult result = 3;
+    Error error = 4;
 }
 
 message CandidatesRequest {
@@ -310,6 +317,7 @@ message CandidatesResponse {
     string jsonrpc = 1;
     string id = 2;
     repeated CandidateResult result = 3;
+    Error error = 4;
 }
 
 message CoinInfoRequest {
@@ -327,6 +335,7 @@ message CoinInfoResponse {
         string reserve_balance = 5;
     }
     Result result = 3;
+    Error error = 4;
 }
 
 message SendTransactionResponse {
@@ -339,6 +348,7 @@ message SendTransactionResponse {
         string hash = 4;
     }
     Result result = 3;
+    Error error = 4;
 }
 message SendTransactionRequest {
     string tx = 1;
@@ -365,6 +375,7 @@ message TransactionResponse {
     string jsonrpc = 1;
     string id = 2;
     TransactionResult result = 3;
+    Error error = 4;
 }
 message TransactionRequest {
     string hash = 1;
@@ -374,6 +385,7 @@ message TransactionsResponse {
     string jsonrpc = 1;
     string id = 2;
     repeated TransactionResult result = 3;
+    Error error = 4;
 }
 message TransactionsRequest {
     string query = 1;
@@ -395,6 +407,7 @@ message EstimateCoinBuyResponse {
         string commission = 2;
     }
     Result result = 3;
+    Error error = 4;
 }
 
 message EstimateCoinSellRequest {
@@ -411,6 +424,7 @@ message EstimateCoinSellResponse {
         string commission = 2;
     }
     Result result = 3;
+    Error error = 4;
 }
 
 message EstimateCoinSellAllResponse {
@@ -420,6 +434,7 @@ message EstimateCoinSellAllResponse {
         string will_get = 1;
     }
     Result result = 3;
+    Error error = 4;
 }
 message EstimateCoinSellAllRequest {
     double coin_to_sell = 1;
@@ -436,6 +451,7 @@ message EstimateTxCommissionResponse {
         string commission = 1;
     }
     Result result = 3;
+    Error error = 4;
 }
 message EstimateTxCommissionRequest {
     string tx = 1;
@@ -456,10 +472,11 @@ message EventsResponse {
         repeated Event events = 1;
     }
     Result result = 3;
+    Error error = 4;
 }
 
 message MissedBlocksRequest {
-    string pub_key = 1;
+    string public_key = 1;
     int32 height = 2;
 }
 message MissedBlocksResponse {
@@ -470,6 +487,7 @@ message MissedBlocksResponse {
         string missed_blocks_count = 2;
     }
     Result result = 3;
+    Error error = 4;
 }
 
 message UnconfirmedTxsResponse {
@@ -482,6 +500,7 @@ message UnconfirmedTxsResponse {
         repeated string txs = 4;
     }
     Result result = 3;
+    Error error = 4;
 }
 message UnconfirmedTxsRequest {
     int32 limit = 1;
@@ -494,10 +513,11 @@ message ValidatorsResponse {
     string jsonrpc = 1;
     string id = 2;
     message Result {
-        string pub_key = 1;
+        string public_key = 1;
         string voting_power = 2;
     }
     repeated Result result = 3;
+    Error error = 4;
 }
 
 service HttpService {
