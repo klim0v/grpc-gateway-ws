@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/klim0v/grpc-gateway-ws/pb"
+	"strconv"
 	"time"
 )
 
@@ -18,20 +19,20 @@ func (s *Service) NetInfo(context.Context, *empty.Empty) (*pb.NetInfoResponse, e
 		var channels []*pb.NetInfoResponse_Result_Peer_ConnectionStatus_Channel
 		for _, channel := range peer.ConnectionStatus.Channels {
 			channels = append(channels, &pb.NetInfoResponse_Result_Peer_ConnectionStatus_Channel{
-				ID:                int32(channel.ID),
-				SendQueueCapacity: int32(channel.SendQueueCapacity),
-				SendQueueSize:     int32(channel.SendQueueSize),
-				Priority:          int32(channel.Priority),
-				RecentlySent:      channel.RecentlySent,
+				ID:                strconv.Itoa(int(channel.ID)),
+				SendQueueCapacity: strconv.Itoa(channel.SendQueueCapacity),
+				SendQueueSize:     strconv.Itoa(channel.SendQueueSize),
+				Priority:          strconv.Itoa(channel.Priority),
+				RecentlySent:      strconv.Itoa(int(channel.RecentlySent)),
 			})
 		}
 
 		peers = append(peers, &pb.NetInfoResponse_Result_Peer{
 			NodeInfo: &pb.NodeInfo{
 				ProtocolVersion: &pb.NodeInfo_ProtocolVersion{
-					P2P:   uint64(peer.NodeInfo.ProtocolVersion.P2P),
-					Block: uint64(peer.NodeInfo.ProtocolVersion.Block),
-					App:   uint64(peer.NodeInfo.ProtocolVersion.App),
+					P2P:   strconv.Itoa(int(peer.NodeInfo.ProtocolVersion.P2P)),
+					Block: strconv.Itoa(int(peer.NodeInfo.ProtocolVersion.Block)),
+					App:   strconv.Itoa(int(peer.NodeInfo.ProtocolVersion.App)),
 				},
 				Id:         string(peer.NodeInfo.ID_),
 				ListenAddr: peer.NodeInfo.ListenAddr,
@@ -46,21 +47,21 @@ func (s *Service) NetInfo(context.Context, *empty.Empty) (*pb.NetInfoResponse, e
 			},
 			IsOutbound: peer.IsOutbound,
 			ConnectionStatus: &pb.NetInfoResponse_Result_Peer_ConnectionStatus{
-				Duration: int64(peer.ConnectionStatus.Duration),
+				Duration: strconv.Itoa(int(peer.ConnectionStatus.Duration)),
 				SendMonitor: &pb.NetInfoResponse_Result_Peer_ConnectionStatus_Monitor{
 					Active:   false,
 					Start:    peer.ConnectionStatus.SendMonitor.Start.Format(time.RFC3339Nano),
-					Duration: peer.ConnectionStatus.SendMonitor.Duration.Nanoseconds(),
-					Idle:     peer.ConnectionStatus.SendMonitor.Idle.Nanoseconds(),
-					Bytes:    peer.ConnectionStatus.SendMonitor.Bytes,
-					Samples:  peer.ConnectionStatus.SendMonitor.Samples,
-					InstRate: peer.ConnectionStatus.SendMonitor.InstRate,
-					CurRate:  peer.ConnectionStatus.SendMonitor.CurRate,
-					AvgRate:  peer.ConnectionStatus.SendMonitor.AvgRate,
-					PeakRate: peer.ConnectionStatus.SendMonitor.PeakRate,
-					BytesRem: peer.ConnectionStatus.SendMonitor.BytesRem,
-					TimeRem:  peer.ConnectionStatus.SendMonitor.TimeRem.Nanoseconds(),
-					Progress: uint32(peer.ConnectionStatus.SendMonitor.Progress),
+					Duration: strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.Duration.Nanoseconds())),
+					Idle:     strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.Idle.Nanoseconds())),
+					Bytes:    strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.Bytes)),
+					Samples:  strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.Samples)),
+					InstRate: strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.InstRate)),
+					CurRate:  strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.CurRate)),
+					AvgRate:  strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.AvgRate)),
+					PeakRate: strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.PeakRate)),
+					BytesRem: strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.BytesRem)),
+					TimeRem:  strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.TimeRem.Nanoseconds())),
+					Progress: strconv.Itoa(int(peer.ConnectionStatus.SendMonitor.Progress)),
 				},
 				RecvMonitor: nil,
 				Channels:    channels,
@@ -75,7 +76,7 @@ func (s *Service) NetInfo(context.Context, *empty.Empty) (*pb.NetInfoResponse, e
 		Result: &pb.NetInfoResponse_Result{
 			Listening: result.Listening,
 			Listeners: result.Listeners,
-			NPeers:    int32(result.NPeers),
+			NPeers:    strconv.Itoa(result.NPeers),
 			Peers:     peers,
 		},
 	}, nil

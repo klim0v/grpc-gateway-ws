@@ -741,24 +741,19 @@
       "type": "object",
       "properties": {
         "ID": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "SendQueueCapacity": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "SendQueueSize": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "Priority": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "RecentlySent": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         }
       }
     },
@@ -773,48 +768,37 @@
           "type": "string"
         },
         "Duration": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "Idle": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "Bytes": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "Samples": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "InstRate": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "CurRate": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "AvgRate": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "PeakRate": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "BytesRem": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "TimeRem": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "Progress": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         }
       }
     },
@@ -949,16 +933,13 @@
       "type": "object",
       "properties": {
         "p2p": {
-          "type": "string",
-          "format": "uint64"
+          "type": "string"
         },
         "block": {
-          "type": "string",
-          "format": "uint64"
+          "type": "string"
         },
         "app": {
-          "type": "string",
-          "format": "uint64"
+          "type": "string"
         }
       }
     },
@@ -966,8 +947,7 @@
       "type": "object",
       "properties": {
         "Duration": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "SendMonitor": {
           "$ref": "#/definitions/ConnectionStatusMonitor"
@@ -1091,8 +1071,7 @@
           "type": "string"
         },
         "latest_block_height": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "latest_block_time": {
           "type": "string"
@@ -1113,8 +1092,7 @@
           "$ref": "#/definitions/ValidatorInfoPubKey"
         },
         "voting_power": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         }
       }
     },
@@ -1204,8 +1182,7 @@
           }
         },
         "transaction_count": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         }
       }
     },
@@ -1306,8 +1283,7 @@
           }
         },
         "status": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         }
       }
     },
@@ -1389,8 +1365,7 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "message": {
           "type": "string"
@@ -1652,8 +1627,7 @@
           }
         },
         "n_peers": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "peers": {
           "type": "array",
@@ -1713,8 +1687,7 @@
       "type": "object",
       "properties": {
         "code": {
-          "type": "integer",
-          "format": "int32"
+          "type": "string"
         },
         "data": {
           "type": "string"
@@ -1757,15 +1730,13 @@
           "type": "string"
         },
         "latest_block_height": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "latest_block_time": {
           "type": "string"
         },
         "keep_last_states": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "tm_status": {
           "$ref": "#/definitions/ResultTmStatus"
@@ -1799,34 +1770,28 @@
           "type": "string"
         },
         "height": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "index": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "from": {
           "type": "string"
         },
         "nonce": {
-          "type": "string",
-          "format": "uint64"
+          "type": "string"
         },
         "gas": {
-          "type": "string",
-          "format": "int64"
+          "type": "string"
         },
         "gas_price": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "gas_coin": {
           "type": "string"
         },
         "type": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "data": {
           "type": "string",
@@ -1843,8 +1808,7 @@
           }
         },
         "code": {
-          "type": "integer",
-          "format": "int64"
+          "type": "string"
         },
         "log": {
           "type": "string"
