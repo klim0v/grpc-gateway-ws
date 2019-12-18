@@ -14,6 +14,7 @@ func (s *Service) Status(context.Context, *empty.Empty) (*pb.StatusResponse, err
 	if err != nil {
 		return new(pb.StatusResponse), err //todo
 	}
+
 	return &pb.StatusResponse{
 		Jsonrpc: "2.0",
 		Id:      "",
@@ -50,10 +51,10 @@ func (s *Service) Status(context.Context, *empty.Empty) (*pb.StatusResponse, err
 					CatchingUp:        result.SyncInfo.CatchingUp,
 				},
 				ValidatorInfo: &pb.StatusResponse_Result_TmStatus_ValidatorInfo{
-					Address:   result.ValidatorInfo.Address.String(),
+					Address: result.ValidatorInfo.Address.String(),
 					PublicKey: &pb.StatusResponse_Result_TmStatus_ValidatorInfo_PubKey{
-						//Type:  result.ValidatorInfo.PubKey., todo
-						//Value: result.ValidatorInfo.PubKey., todo
+						Type:  "todo",
+						Value: fmt.Sprintf("Mp%x", result.ValidatorInfo.PubKey.Bytes()[5:]),
 					},
 					VotingPower: strconv.Itoa(int(result.ValidatorInfo.VotingPower)),
 				},

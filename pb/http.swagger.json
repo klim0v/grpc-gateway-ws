@@ -55,10 +55,14 @@
         },
         "parameters": [
           {
-            "name": "public_key",
+            "name": "addresses",
             "in": "query",
             "required": false,
-            "type": "string"
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "collectionFormat": "multi"
           },
           {
             "name": "height",
@@ -89,8 +93,8 @@
             "name": "height",
             "in": "query",
             "required": false,
-            "type": "integer",
-            "format": "int32"
+            "type": "string",
+            "format": "int64"
           }
         ],
         "tags": [
@@ -675,7 +679,7 @@
         }
       }
     },
-    "AppStateCandidates": {
+    "AppStateCandidate": {
       "type": "object",
       "properties": {
         "reward_address": {
@@ -696,7 +700,7 @@
         "stakes": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AppStateCandidatesStake"
+            "$ref": "#/definitions/AppStateCandidateStake"
           }
         },
         "created_at_block": {
@@ -708,7 +712,7 @@
         }
       }
     },
-    "AppStateCandidatesStake": {
+    "AppStateCandidateStake": {
       "type": "object",
       "properties": {
         "owner": {
@@ -722,6 +726,17 @@
         },
         "bip_value": {
           "type": "string"
+        }
+      }
+    },
+    "BlockResponseResultEvidence": {
+      "type": "object",
+      "properties": {
+        "evidence": {
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/ResultEvidenceEvidence"
+          }
         }
       }
     },
@@ -816,14 +831,6 @@
         }
       }
     },
-    "ConsensusParamsEvidence": {
-      "type": "object",
-      "properties": {
-        "max_age": {
-          "type": "string"
-        }
-      }
-    },
     "EventsResponseResultEvent": {
       "type": "object",
       "properties": {
@@ -853,7 +860,7 @@
         "candidates": {
           "type": "array",
           "items": {
-            "$ref": "#/definitions/AppStateCandidates"
+            "$ref": "#/definitions/AppStateCandidate"
           }
         },
         "accounts": {
@@ -900,10 +907,18 @@
           "$ref": "#/definitions/ConsensusParamsBlock"
         },
         "evidence": {
-          "$ref": "#/definitions/ConsensusParamsEvidence"
+          "$ref": "#/definitions/GenesisConsensusParamsEvidence"
         },
         "validator": {
           "$ref": "#/definitions/GenesisConsensusParamsValidator"
+        }
+      }
+    },
+    "GenesisConsensusParamsEvidence": {
+      "type": "object",
+      "properties": {
+        "max_age": {
+          "type": "string"
         }
       }
     },
@@ -962,6 +977,9 @@
           }
         }
       }
+    },
+    "ResultEvidenceEvidence": {
+      "type": "object"
     },
     "ResultGenesis": {
       "type": "object",
@@ -1031,15 +1049,13 @@
           "type": "string"
         },
         "gas_price": {
-          "type": "number",
-          "format": "double"
+          "type": "string"
         },
         "type": {
-          "type": "number",
-          "format": "double"
+          "type": "string"
         },
         "data": {
-          "$ref": "#/definitions/TransactionData"
+          "type": "object"
         },
         "payload": {
           "type": "string"
@@ -1058,6 +1074,12 @@
           "additionalProperties": {
             "type": "string"
           }
+        },
+        "code": {
+          "type": "string"
+        },
+        "log": {
+          "type": "string"
         }
       }
     },
@@ -1092,20 +1114,6 @@
           "$ref": "#/definitions/ValidatorInfoPubKey"
         },
         "voting_power": {
-          "type": "string"
-        }
-      }
-    },
-    "TransactionData": {
-      "type": "object",
-      "properties": {
-        "coin": {
-          "type": "string"
-        },
-        "to": {
-          "type": "string"
-        },
-        "value": {
           "type": "string"
         }
       }
@@ -1162,7 +1170,10 @@
           "type": "string"
         },
         "result": {
-          "$ref": "#/definitions/pbAddressesResponseResult"
+          "type": "array",
+          "items": {
+            "$ref": "#/definitions/pbAddressesResponseResult"
+          }
         },
         "error": {
           "$ref": "#/definitions/pbError"
@@ -1241,6 +1252,9 @@
           "items": {
             "$ref": "#/definitions/BlockResponseResultValidator"
           }
+        },
+        "evidence": {
+          "$ref": "#/definitions/BlockResponseResultEvidence"
         }
       }
     },
@@ -1902,6 +1916,14 @@
           "type": "string"
         }
       }
+    },
+    "protobufNullValue": {
+      "type": "string",
+      "enum": [
+        "NULL_VALUE"
+      ],
+      "default": "NULL_VALUE",
+      "description": "`NullValue` is a singleton enumeration to represent the null value for the\n`Value` type union.\n\n The JSON representation for `NullValue` is JSON `null`.\n\n - NULL_VALUE: Null value."
     }
   }
 }

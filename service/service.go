@@ -5,7 +5,6 @@ import (
 	"github.com/MinterTeam/minter-go-node/config"
 	"github.com/MinterTeam/minter-go-node/core/minter"
 	"github.com/MinterTeam/minter-go-node/core/state"
-	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/klim0v/grpc-gateway-ws/pb"
 	"github.com/tendermint/go-amino"
 	rpc "github.com/tendermint/tendermint/rpc/client"
@@ -17,18 +16,6 @@ type Service struct {
 	client     *rpc.Local
 	minterCfg  *config.Config
 	version    string
-}
-
-func (s *Service) Address(context.Context, *pb.AddressRequest) (*pb.AddressResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) Addresses(context.Context, *pb.AddressesRequest) (*pb.AddressesResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) Block(context.Context, *pb.BlockRequest) (*pb.BlockResponse, error) {
-	panic("implement me")
 }
 
 func (s *Service) Candidate(context.Context, *pb.CandidateRequest) (*pb.CandidateResponse, error) {
@@ -87,15 +74,11 @@ func (s *Service) Validators(context.Context, *pb.ValidatorsRequest) (*pb.Valida
 	panic("implement me")
 }
 
-func (s *Service) Genesis(context.Context, *empty.Empty) (*pb.GenesisResponse, error) {
-	panic("implement me")
-}
-
 func NewService(blockchain *minter.Blockchain, client *rpc.Local, minterCfg *config.Config, version string) *Service {
 	return &Service{blockchain: blockchain, client: client, minterCfg: minterCfg, cdc: amino.NewCodec(), version: version}
 }
 
-func (s *Service) getStateForHeight(height int) (*state.State, error) {
+func (s *Service) getStateForHeight(height int32) (*state.State, error) {
 	if height > 0 {
 		cState, err := s.blockchain.GetStateForHeight(uint64(height))
 

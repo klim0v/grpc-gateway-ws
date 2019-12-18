@@ -7,11 +7,15 @@ import (
 )
 
 func (s *Service) MinGasPrice(context.Context, *empty.Empty) (*pb.MinGasPriceResponse, error) {
-	return &pb.MinGasPriceResponse{Jsonrpc: "2.0", Result: string(s.blockchain.MinGasPrice())}, nil
+	return &pb.MinGasPriceResponse{
+		Jsonrpc: "2.0",
+		Id:      "",
+		Result:  string(s.blockchain.MinGasPrice()),
+	}, nil
 }
 
 func (s *Service) MaxGas(_ context.Context, req *pb.MaxGasRequest) (*pb.MaxGasResponse, error) {
-	cState, err := s.getStateForHeight(int(req.Height))
+	cState, err := s.getStateForHeight(req.Height)
 	if err != nil {
 		return new(pb.MaxGasResponse), err //todo
 	}

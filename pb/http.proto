@@ -3,6 +3,7 @@ package pb;
 
 import "google/api/annotations.proto";
 import "google/protobuf/empty.proto";
+import "google/protobuf/struct.proto";
 
 message Error {
     string code = 1;
@@ -147,7 +148,7 @@ message GenesisResponse {
                     string absent_times = 6;
                 }
                 repeated Validator validators = 2;
-                message Candidates {
+                message Candidate {
                     string reward_address = 1;
                     string owner_address = 2;
                     string total_bip_stake = 3;
@@ -163,7 +164,7 @@ message GenesisResponse {
                     string created_at_block = 7;
                     double status = 8;
                 }
-                repeated Candidates candidates = 3;
+                repeated Candidate candidates = 3;
                 message Account {
                     string address = 1;
                     message Balance {
@@ -192,7 +193,7 @@ message MinGasPriceResponse {
 }
 
 message BlockRequest {
-    int32 height = 1;
+    int64 height = 1;
 }
 message BlockResponse {
     string jsonrpc = 1;
@@ -209,35 +210,34 @@ message BlockResponse {
             string raw_tx = 2;
             string from = 3;
             string nonce = 4;
-            double gas_price = 5;
-            double type = 6;
-
-            message Data {
-                string coin = 1;
-                string to = 2;
-                string value = 3;
-            }
-
-            Data data = 7;
+            string gas_price = 5;
+            string type = 6;
+            google.protobuf.Struct data = 7;
             string payload = 8;
             string service_data = 9;
             string gas = 10;
             string gas_coin = 11;
-
             map<string, string> tags = 12;
+            string code = 13;
+            string log = 14;
         }
 
         repeated Transaction transactions = 6;
         string block_reward = 7;
         string size = 8;
         string proposer = 9;
-
         message Validator {
             string public_key = 1;
             bool signed = 2;
         }
-
         repeated Validator validators = 10;
+        message Evidence {
+            message Evidence {
+
+            }
+            repeated Evidence evidence = 1;
+        }
+        Evidence evidence = 11;
     }
     Result result = 3;
     Error error = 4;
@@ -269,7 +269,7 @@ message AddressResponse {
 }
 
 message AddressesRequest {
-    string public_key = 1;
+    repeated string addresses = 1;
     int32 height = 2;
 }
 message AddressesResponse {
@@ -280,7 +280,7 @@ message AddressesResponse {
         map<string, string> balance = 2;
         string transaction_count = 3;
     }
-    Result result = 3;
+    repeated Result result = 3;
     Error error = 4;
 }
 
