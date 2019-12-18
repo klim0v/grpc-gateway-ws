@@ -34,14 +34,6 @@ func (s *Service) EstimateTxCommission(context.Context, *pb.EstimateTxCommission
 	panic("implement me")
 }
 
-func (s *Service) MissedBlocks(context.Context, *pb.MissedBlocksRequest) (*pb.MissedBlocksResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) SendTransaction(context.Context, *pb.SendTransactionRequest) (*pb.SendTransactionResponse, error) {
-	panic("implement me")
-}
-
 func (s *Service) Transaction(context.Context, *pb.TransactionRequest) (*pb.TransactionResponse, error) {
 	panic("implement me")
 }

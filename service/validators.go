@@ -16,9 +16,11 @@ func (s *Service) Validators(_ context.Context, req *pb.ValidatorsRequest) (*pb.
 	h := int64(height)
 	tmVals, err := s.client.Validators(&h)
 	if err != nil {
-		return &pb.ValidatorsResponse{Error: &pb.Error{
-			Message: err.Error(),
-		}}, nil
+		return &pb.ValidatorsResponse{
+			Error: &pb.Error{
+				Message: err.Error(),
+			},
+		}, nil
 	}
 
 	responseValidators := make([]*pb.ValidatorsResponse_Result, len(tmVals.Validators))

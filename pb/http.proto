@@ -9,6 +9,7 @@ message Error {
     string code = 1;
     string message = 2;
     string data = 3;
+    string log = 4;
 }
 
 message NodeInfo {

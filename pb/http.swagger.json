@@ -1386,6 +1386,9 @@
         },
         "data": {
           "type": "string"
+        },
+        "log": {
+          "type": "string"
         }
       }
     },

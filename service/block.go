@@ -70,8 +70,8 @@ func (s *Service) Block(_ context.Context, req *pb.BlockRequest) (*pb.BlockRespo
 			return new(pb.BlockResponse), err
 		}
 
-		dataStruct := new(_struct.Struct)
-		err = json.Unmarshal(data, dataStruct)
+		dataStruct := &_struct.Struct{Fields: make(map[string]*_struct.Value)}
+		err = json.Unmarshal(data, dataStruct.Fields)
 		if err != nil {
 			return new(pb.BlockResponse), err
 		}
