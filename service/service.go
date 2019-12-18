@@ -18,18 +18,6 @@ type Service struct {
 	version    string
 }
 
-func (s *Service) Candidate(context.Context, *pb.CandidateRequest) (*pb.CandidateResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) Candidates(context.Context, *pb.CandidatesRequest) (*pb.CandidatesResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) CoinInfo(context.Context, *pb.CoinInfoRequest) (*pb.CoinInfoResponse, error) {
-	panic("implement me")
-}
-
 func (s *Service) EstimateCoinBuy(context.Context, *pb.EstimateCoinBuyRequest) (*pb.EstimateCoinBuyResponse, error) {
 	panic("implement me")
 }
@@ -46,10 +34,6 @@ func (s *Service) EstimateTxCommission(context.Context, *pb.EstimateTxCommission
 	panic("implement me")
 }
 
-func (s *Service) Events(context.Context, *pb.EventsRequest) (*pb.EventsResponse, error) {
-	panic("implement me")
-}
-
 func (s *Service) MissedBlocks(context.Context, *pb.MissedBlocksRequest) (*pb.MissedBlocksResponse, error) {
 	panic("implement me")
 }
@@ -63,14 +47,6 @@ func (s *Service) Transaction(context.Context, *pb.TransactionRequest) (*pb.Tran
 }
 
 func (s *Service) Transactions(context.Context, *pb.TransactionsRequest) (*pb.TransactionsResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) UnconfirmedTxs(context.Context, *pb.UnconfirmedTxsRequest) (*pb.UnconfirmedTxsResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) Validators(context.Context, *pb.ValidatorsRequest) (*pb.ValidatorsResponse, error) {
 	panic("implement me")
 }
 
