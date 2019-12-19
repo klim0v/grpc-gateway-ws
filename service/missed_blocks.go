@@ -11,7 +11,7 @@ func (s *Service) MissedBlocks(_ context.Context, req *pb.MissedBlocksRequest) (
 	if err != nil {
 		return &pb.MissedBlocksResponse{
 			Error: &pb.Error{
-				Message: err.Error(),
+				Data: err.Error(),
 			},
 		}, err
 	}

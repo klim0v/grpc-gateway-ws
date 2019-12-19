@@ -214,8 +214,8 @@ message BlockResponse {
             string gas_price = 5;
             string type = 6;
             google.protobuf.Struct data = 7;
-            string payload = 8;
-            string service_data = 9;
+            bytes payload = 8;
+            bytes service_data = 9;
             string gas = 10;
             string gas_coin = 11;
             map<string, string> tags = 12;
@@ -366,7 +366,7 @@ message TransactionResult {
     string gas_price = 8;
     string gas_coin = 9;
     string type = 10;
-    bytes data = 11;
+    google.protobuf.Struct data = 11;
     bytes payload = 12;
     map<string, string> tags = 13;
     string code = 14;

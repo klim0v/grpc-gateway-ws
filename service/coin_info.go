@@ -12,7 +12,7 @@ func (s *Service) CoinInfo(_ context.Context, req *pb.CoinInfoRequest) (*pb.Coin
 	if err != nil {
 		return &pb.CoinInfoResponse{
 			Error: &pb.Error{
-				Message: err.Error(),
+				Data: err.Error(),
 			},
 		}, nil
 	}

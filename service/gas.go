@@ -2,6 +2,7 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/klim0v/grpc-gateway-ws/pb"
 )
@@ -10,7 +11,7 @@ func (s *Service) MinGasPrice(context.Context, *empty.Empty) (*pb.MinGasPriceRes
 	return &pb.MinGasPriceResponse{
 		Jsonrpc: "2.0",
 		Id:      "",
-		Result:  string(s.blockchain.MinGasPrice()),
+		Result:  fmt.Sprintf("%d", s.blockchain.MinGasPrice()),
 	}, nil
 }
 
@@ -23,6 +24,6 @@ func (s *Service) MaxGas(_ context.Context, req *pb.MaxGasRequest) (*pb.MaxGasRe
 	return &pb.MaxGasResponse{
 		Jsonrpc: "2.0",
 		Id:      "",
-		Result:  string(cState.App.GetMaxGas()),
+		Result:  fmt.Sprintf("%d", cState.App.GetMaxGas()),
 	}, nil
 }

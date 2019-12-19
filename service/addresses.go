@@ -2,9 +2,9 @@ package service
 
 import (
 	"context"
+	"fmt"
 	"github.com/MinterTeam/minter-go-node/core/types"
 	"github.com/klim0v/grpc-gateway-ws/pb"
-	"strconv"
 )
 
 func (s *Service) Addresses(_ context.Context, req *pb.AddressesRequest) (*pb.AddressesResponse, error) {
@@ -22,7 +22,7 @@ func (s *Service) Addresses(_ context.Context, req *pb.AddressesRequest) (*pb.Ad
 		data := &pb.AddressesResponse_Result{
 			Address:          address,
 			Balance:          make(map[string]string),
-			TransactionCount: strconv.Itoa(int(cState.Accounts.GetNonce(addr))),
+			TransactionCount: fmt.Sprintf("%d", cState.Accounts.GetNonce(addr)),
 		}
 
 		balances := cState.Accounts.GetBalances(addr)

@@ -11,7 +11,7 @@ func (s *Service) SendTransaction(_ context.Context, req *pb.SendTransactionRequ
 	if err != nil {
 		return &pb.SendTransactionResponse{
 			Error: &pb.Error{
-				Message: err.Error(),
+				Data: err.Error(),
 			},
 		}, nil
 	}

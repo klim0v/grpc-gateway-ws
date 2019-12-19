@@ -1058,10 +1058,12 @@
           "type": "object"
         },
         "payload": {
-          "type": "string"
+          "type": "string",
+          "format": "byte"
         },
         "service_data": {
-          "type": "string"
+          "type": "string",
+          "format": "byte"
         },
         "gas": {
           "type": "string"
@@ -1811,8 +1813,7 @@
           "type": "string"
         },
         "data": {
-          "type": "string",
-          "format": "byte"
+          "type": "object"
         },
         "payload": {
           "type": "string",

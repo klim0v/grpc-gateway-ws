@@ -18,7 +18,7 @@ func (s *Service) Validators(_ context.Context, req *pb.ValidatorsRequest) (*pb.
 	if err != nil {
 		return &pb.ValidatorsResponse{
 			Error: &pb.Error{
-				Message: err.Error(),
+				Data: err.Error(),
 			},
 		}, nil
 	}

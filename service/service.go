@@ -30,18 +30,6 @@ func (s *Service) EstimateCoinSellAll(context.Context, *pb.EstimateCoinSellAllRe
 	panic("implement me")
 }
 
-func (s *Service) EstimateTxCommission(context.Context, *pb.EstimateTxCommissionRequest) (*pb.EstimateTxCommissionResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) Transaction(context.Context, *pb.TransactionRequest) (*pb.TransactionResponse, error) {
-	panic("implement me")
-}
-
-func (s *Service) Transactions(context.Context, *pb.TransactionsRequest) (*pb.TransactionsResponse, error) {
-	panic("implement me")
-}
-
 func NewService(blockchain *minter.Blockchain, client *rpc.Local, minterCfg *config.Config, version string) *Service {
 	return &Service{blockchain: blockchain, client: client, minterCfg: minterCfg, cdc: amino.NewCodec(), version: version}
 }

@@ -14,7 +14,7 @@ func (s *Service) Candidate(_ context.Context, req *pb.CandidateRequest) (*pb.Ca
 	if err != nil {
 		return &pb.CandidateResponse{
 			Error: &pb.Error{
-				Message: err.Error(),
+				Data: err.Error(),
 			},
 		}, err
 	}

@@ -3,22 +3,30 @@ package service
 import (
 	"context"
 	"encoding/json"
+	"fmt"
 	"github.com/golang/protobuf/ptypes/empty"
 	"github.com/klim0v/grpc-gateway-ws/pb"
-	"strconv"
 	"time"
 )
 
 func (s *Service) Genesis(context.Context, *empty.Empty) (*pb.GenesisResponse, error) {
 	result, err := s.client.Genesis()
 	if err != nil {
-		return new(pb.GenesisResponse), err //todo
+		return &pb.GenesisResponse{
+			Error: &pb.Error{
+				Data: err.Error(),
+			},
+		}, nil
 	}
 
 	appState := new(pb.GenesisResponse_Result_Genesis_AppState)
 	err = json.Unmarshal(result.Genesis.AppState, appState)
 	if err != nil {
-		return new(pb.GenesisResponse), err //todo
+		return &pb.GenesisResponse{
+			Error: &pb.Error{
+				Data: err.Error(),
+			},
+		}, nil
 	}
 
 	return &pb.GenesisResponse{
@@ -30,12 +38,12 @@ func (s *Service) Genesis(context.Context, *empty.Empty) (*pb.GenesisResponse, e
 				ChainId:     result.Genesis.ChainID,
 				ConsensusParams: &pb.GenesisResponse_Result_Genesis_ConsensusParams{
 					Block: &pb.GenesisResponse_Result_Genesis_ConsensusParams_Block{
-						MaxBytes:   strconv.Itoa(int(result.Genesis.ConsensusParams.Block.MaxBytes)),
-						MaxGas:     strconv.Itoa(int(result.Genesis.ConsensusParams.Block.MaxGas)),
-						TimeIotaMs: strconv.Itoa(int(result.Genesis.ConsensusParams.Block.TimeIotaMs)),
+						MaxBytes:   fmt.Sprintf("%d", result.Genesis.ConsensusParams.Block.MaxBytes),
+						MaxGas:     fmt.Sprintf("%d", result.Genesis.ConsensusParams.Block.MaxGas),
+						TimeIotaMs: fmt.Sprintf("%d", result.Genesis.ConsensusParams.Block.TimeIotaMs),
 					},
 					Evidence: &pb.GenesisResponse_Result_Genesis_ConsensusParams_Evidence{
-						MaxAge: strconv.Itoa(int(result.Genesis.ConsensusParams.Evidence.MaxAge)),
+						MaxAge: fmt.Sprintf("%d", result.Genesis.ConsensusParams.Evidence.MaxAge),
 					},
 					Validator: &pb.GenesisResponse_Result_Genesis_ConsensusParams_Validator{
 						PublicKeyTypes: result.Genesis.ConsensusParams.Validator.PubKeyTypes,
@@ -45,6 +53,5 @@ func (s *Service) Genesis(context.Context, *empty.Empty) (*pb.GenesisResponse, e
 				AppState: appState,
 			},
 		},
-		Error: nil,
 	}, nil
 }

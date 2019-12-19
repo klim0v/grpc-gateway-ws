@@ -5,7 +5,6 @@ import (
 	"context"
 	"encoding/hex"
 	"encoding/json"
-	"errors"
 	"fmt"
 	"github.com/MinterTeam/minter-go-node/core/rewards"
 	"github.com/MinterTeam/minter-go-node/core/transaction"
@@ -13,7 +12,6 @@ import (
 	_struct "github.com/golang/protobuf/ptypes/struct"
 	"github.com/klim0v/grpc-gateway-ws/pb"
 	core_types "github.com/tendermint/tendermint/rpc/core/types"
-	"strconv"
 	"time"
 )
 
@@ -67,13 +65,21 @@ func (s *Service) Block(_ context.Context, req *pb.BlockRequest) (*pb.BlockRespo
 
 		data, err := s.encodeTxData(tx)
 		if err != nil {
-			return new(pb.BlockResponse), err
+			return &pb.BlockResponse{
+				Error: &pb.Error{
+					Data: err.Error(),
+				},
+			}, nil
 		}
 
 		dataStruct := &_struct.Struct{Fields: make(map[string]*_struct.Value)}
 		err = json.Unmarshal(data, dataStruct.Fields)
 		if err != nil {
-			return new(pb.BlockResponse), err
+			return &pb.BlockResponse{
+				Error: &pb.Error{
+					Data: err.Error(),
+				},
+			}, nil
 		}
 
 		txs[i] = &pb.BlockResponse_Result_Transaction{
@@ -84,8 +90,8 @@ func (s *Service) Block(_ context.Context, req *pb.BlockRequest) (*pb.BlockRespo
 			GasPrice:    fmt.Sprintf("%d", tx.GasPrice),
 			Type:        fmt.Sprintf("%d", tx.Type),
 			Data:        dataStruct, //todo
-			Payload:     string(tx.Payload),
-			ServiceData: string(tx.ServiceData),
+			Payload:     tx.Payload,
+			ServiceData: tx.ServiceData,
 			Gas:         fmt.Sprintf("%d", tx.Gas()),
 			GasCoin:     tx.GasCoin.String(),
 			Tags:        tags,
@@ -133,13 +139,13 @@ func (s *Service) Block(_ context.Context, req *pb.BlockRequest) (*pb.BlockRespo
 	return &pb.BlockResponse{
 		Result: &pb.BlockResponse_Result{
 			Hash:         hex.EncodeToString(block.Block.Hash()),
-			Height:       strconv.Itoa(int(block.Block.Height)),
+			Height:       fmt.Sprintf("%d", block.Block.Height),
 			Time:         block.Block.Time.Format(time.RFC3339Nano),
-			NumTxs:       strconv.Itoa(int(block.Block.NumTxs)),
-			TotalTxs:     strconv.Itoa(int(block.Block.TotalTxs)),
+			NumTxs:       fmt.Sprintf("%d", block.Block.NumTxs),
+			TotalTxs:     fmt.Sprintf("%d", block.Block.TotalTxs),
 			Transactions: txs,
 			BlockReward:  rewards.GetRewardForBlock(uint64(req.Height)).String(),
-			Size:         strconv.Itoa(len(s.cdc.MustMarshalBinaryLengthPrefixed(block))),
+			Size:         fmt.Sprintf("%d", s.cdc.MustMarshalBinaryLengthPrefixed(block)),
 			Proposer:     proposer,
 			Validators:   validators,
 			Evidence: &pb.BlockResponse_Result_Evidence{
@@ -164,39 +170,4 @@ func (s *Service) getBlockProposer(block *core_types.ResultBlock) (*types.Pubkey
 	}
 
 	return nil, &pb.Error{Code: "404", Message: "Block proposer not found"}
-}
-
-func (s *Service) encodeTxData(decodedTx *transaction.Transaction) ([]byte, error) {
-	switch decodedTx.Type {
-	case transaction.TypeSend:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.SendData))
-	case transaction.TypeRedeemCheck:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.RedeemCheckData))
-	case transaction.TypeSellCoin:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.SellCoinData))
-	case transaction.TypeSellAllCoin:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.SellAllCoinData))
-	case transaction.TypeBuyCoin:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.BuyCoinData))
-	case transaction.TypeCreateCoin:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.CreateCoinData))
-	case transaction.TypeDeclareCandidacy:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.DeclareCandidacyData))
-	case transaction.TypeDelegate:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.DelegateData))
-	case transaction.TypeSetCandidateOnline:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.SetCandidateOnData))
-	case transaction.TypeSetCandidateOffline:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.SetCandidateOffData))
-	case transaction.TypeUnbond:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.UnbondData))
-	case transaction.TypeMultisend:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.MultisendData))
-	case transaction.TypeCreateMultisig:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.CreateMultisigData))
-	case transaction.TypeEditCandidate:
-		return s.cdc.MarshalJSON(decodedTx.GetDecodedData().(*transaction.EditCandidateData))
-	}
-
-	return nil, errors.New("unknown tx type")
 }
