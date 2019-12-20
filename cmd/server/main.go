@@ -31,17 +31,16 @@ func run() error {
 
 	mux := runtime.NewServeMux()
 
-	if err := gw.RegisterHttpServiceHandlerServer(ctx, mux, service.NewService(cdc, blockchain, client, minterCfg, version)); err != nil {
+	srvc := service.NewService(cdc, blockchain, client, minterCfg, version)
+	if err := gw.RegisterHttpServiceHandlerServer(ctx, mux, srvc); err != nil {
 		return err
 	}
 
-	mux.Handle("GET", runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"subscribe"}, "", runtime.AssumeColonVerbOpt(true))), func(w http.ResponseWriter, r *http.Request, pathParams map[string]string) {
-
-	})
+	mux.Handle("GET", runtime.MustPattern(runtime.NewPattern(1, []int{2, 0}, []string{"subscribe"}, "", runtime.AssumeColonVerbOpt(true))), srvc.Subscribe)
 
 	fmt.Println("listening")
 
-	if err := http.ListenAndServe(":8000", mux); err != nil {
+	if err := http.ListenAndServe(":8841", mux); err != nil {
 		return err
 	}
 
