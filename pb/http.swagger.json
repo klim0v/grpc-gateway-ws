@@ -212,15 +212,13 @@
             "name": "coin_to_buy",
             "in": "query",
             "required": false,
-            "type": "number",
-            "format": "double"
+            "type": "string"
           },
           {
             "name": "coin_to_sell",
             "in": "query",
             "required": false,
-            "type": "number",
-            "format": "double"
+            "type": "string"
           },
           {
             "name": "value_to_buy",
@@ -257,15 +255,13 @@
             "name": "coin_to_sell",
             "in": "query",
             "required": false,
-            "type": "number",
-            "format": "double"
+            "type": "string"
           },
           {
             "name": "coin_to_buy",
             "in": "query",
             "required": false,
-            "type": "number",
-            "format": "double"
+            "type": "string"
           },
           {
             "name": "value_to_sell",
@@ -302,15 +298,13 @@
             "name": "coin_to_sell",
             "in": "query",
             "required": false,
-            "type": "number",
-            "format": "double"
+            "type": "string"
           },
           {
             "name": "coin_to_buy",
             "in": "query",
             "required": false,
-            "type": "number",
-            "format": "double"
+            "type": "string"
           },
           {
             "name": "value_to_sell",
@@ -322,7 +316,8 @@
             "name": "gas_price",
             "in": "query",
             "required": false,
-            "type": "string"
+            "type": "string",
+            "format": "uint64"
           },
           {
             "name": "height",

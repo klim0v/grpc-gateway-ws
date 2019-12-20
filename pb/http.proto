@@ -395,8 +395,8 @@ message TransactionsRequest {
 }
 
 message EstimateCoinBuyRequest {
-    double coin_to_buy = 1;
-    double coin_to_sell = 2;
+    string coin_to_buy = 1;
+    string coin_to_sell = 2;
     string value_to_buy = 3;
     int32 height = 4;
 }
@@ -412,8 +412,8 @@ message EstimateCoinBuyResponse {
 }
 
 message EstimateCoinSellRequest {
-    double coin_to_sell = 1;
-    double coin_to_buy = 2;
+    string coin_to_sell = 1;
+    string coin_to_buy = 2;
     string value_to_sell = 3;
     int32 height = 4;
 }
@@ -438,10 +438,10 @@ message EstimateCoinSellAllResponse {
     Error error = 4;
 }
 message EstimateCoinSellAllRequest {
-    double coin_to_sell = 1;
-    double coin_to_buy = 2;
+    string coin_to_sell = 1;
+    string coin_to_buy = 2;
     string value_to_sell = 3;
-    string gas_price = 4;
+    uint64 gas_price = 4;
     int32 height = 5;
 }
 
