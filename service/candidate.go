@@ -16,7 +16,7 @@ func (s *Service) Candidate(_ context.Context, req *pb.CandidateRequest) (*pb.Ca
 			Error: &pb.Error{
 				Data: err.Error(),
 			},
-		}, err
+		}, nil
 	}
 
 	candidate := cState.Candidates.GetCandidate(types.BytesToPubkey([]byte(req.PublicKey)))

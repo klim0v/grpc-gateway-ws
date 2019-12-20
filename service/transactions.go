@@ -26,7 +26,7 @@ func (s *Service) Transactions(_ context.Context, req *pb.TransactionsRequest) (
 			Error: &pb.Error{
 				Data: err.Error(),
 			},
-		}, err
+		}, nil
 	}
 
 	result := make([]*pb.TransactionResult, len(rpcResult.Txs))

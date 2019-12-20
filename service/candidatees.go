@@ -8,7 +8,11 @@ import (
 func (s *Service) Candidates(_ context.Context, req *pb.CandidatesRequest) (*pb.CandidatesResponse, error) {
 	cState, err := s.getStateForHeight(req.Height)
 	if err != nil {
-		return nil, err
+		return &pb.CandidatesResponse{
+			Error: &pb.Error{
+				Data: err.Error(),
+			},
+		}, nil
 	}
 
 	candidates := cState.Candidates.GetCandidates()

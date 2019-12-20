@@ -11,7 +11,11 @@ import (
 func (s *Service) NetInfo(context.Context, *empty.Empty) (*pb.NetInfoResponse, error) {
 	result, err := s.client.NetInfo()
 	if err != nil {
-		return new(pb.NetInfoResponse), err //todo
+		return &pb.NetInfoResponse{
+			Error: &pb.Error{
+				Data: err.Error(),
+			},
+		}, nil
 	}
 
 	var peers []*pb.NetInfoResponse_Result_Peer

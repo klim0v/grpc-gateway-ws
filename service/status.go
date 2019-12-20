@@ -11,7 +11,11 @@ import (
 func (s *Service) Status(context.Context, *empty.Empty) (*pb.StatusResponse, error) {
 	result, err := s.client.Status()
 	if err != nil {
-		return new(pb.StatusResponse), err //todo
+		return &pb.StatusResponse{
+			Error: &pb.Error{
+				Data: err.Error(),
+			},
+		}, nil
 	}
 
 	return &pb.StatusResponse{

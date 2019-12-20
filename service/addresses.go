@@ -10,7 +10,11 @@ import (
 func (s *Service) Addresses(_ context.Context, req *pb.AddressesRequest) (*pb.AddressesResponse, error) {
 	cState, err := s.getStateForHeight(req.Height)
 	if err != nil {
-		return new(pb.AddressesResponse), err
+		return &pb.AddressesResponse{
+			Error: &pb.Error{
+				Data: err.Error(),
+			},
+		}, nil
 	}
 
 	response := &pb.AddressesResponse{

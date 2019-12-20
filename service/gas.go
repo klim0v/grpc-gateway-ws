@@ -18,7 +18,11 @@ func (s *Service) MinGasPrice(context.Context, *empty.Empty) (*pb.MinGasPriceRes
 func (s *Service) MaxGas(_ context.Context, req *pb.MaxGasRequest) (*pb.MaxGasResponse, error) {
 	cState, err := s.getStateForHeight(req.Height)
 	if err != nil {
-		return new(pb.MaxGasResponse), err //todo
+		return &pb.MaxGasResponse{
+			Error: &pb.Error{
+				Data: err.Error(),
+			},
+		}, nil
 	}
 
 	return &pb.MaxGasResponse{

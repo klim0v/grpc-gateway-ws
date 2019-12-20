@@ -13,7 +13,7 @@ func (s *Service) MissedBlocks(_ context.Context, req *pb.MissedBlocksRequest) (
 			Error: &pb.Error{
 				Data: err.Error(),
 			},
-		}, err
+		}, nil
 	}
 
 	vals := cState.Validators.GetValidators()

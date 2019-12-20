@@ -23,8 +23,10 @@ func NewService(blockchain *minter.Blockchain, client *rpc.Local, minterCfg *con
 func (s *Service) getStateForHeight(height int32) (*state.State, error) {
 	if height > 0 {
 		cState, err := s.blockchain.GetStateForHeight(uint64(height))
-
-		return cState, err
+		if err != nil {
+			return nil, err
+		}
+		return cState, nil
 	}
 
 	return s.blockchain.CurrentState(), nil
