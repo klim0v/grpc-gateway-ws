@@ -3,13 +3,25 @@ package main
 import (
 	"context"
 	"fmt"
+	"github.com/MinterTeam/minter-go-node/core/minter"
 	"github.com/klim0v/grpc-gateway-ws/service"
-	"golang.org/x/sync/errgroup"
+	rpc "github.com/tendermint/tendermint/rpc/client"
 	"net/http"
 
 	"github.com/golang/glog"
 	"github.com/grpc-ecosystem/grpc-gateway/runtime"
 	gw "github.com/klim0v/grpc-gateway-ws/pb"
+
+	"github.com/MinterTeam/minter-go-node/config"
+	"github.com/tendermint/go-amino"
+)
+
+var (
+	cdc        = amino.NewCodec()
+	blockchain *minter.Blockchain
+	client     *rpc.Local
+	minterCfg  *config.Config
+	version    string
 )
 
 func run() error {
@@ -19,7 +31,7 @@ func run() error {
 
 	mux := runtime.NewServeMux()
 
-	if err := gw.RegisterHttpServiceHandlerServer(ctx, mux, &service.Service{}); err != nil {
+	if err := gw.RegisterHttpServiceHandlerServer(ctx, mux, service.NewService(cdc, blockchain, client, minterCfg, version)); err != nil {
 		return err
 	}
 
@@ -29,12 +41,7 @@ func run() error {
 
 	fmt.Println("listening")
 
-	var group errgroup.Group
-	group.Go(func() error {
-		return http.ListenAndServe(":8000", mux)
-	})
-
-	if err := group.Wait(); err != nil {
+	if err := http.ListenAndServe(":8000", mux); err != nil {
 		return err
 	}
 

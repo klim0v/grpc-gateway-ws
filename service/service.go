@@ -16,8 +16,8 @@ type Service struct {
 	version    string
 }
 
-func NewService(blockchain *minter.Blockchain, client *rpc.Local, minterCfg *config.Config, version string) *Service {
-	return &Service{blockchain: blockchain, client: client, minterCfg: minterCfg, cdc: amino.NewCodec(), version: version}
+func NewService(cdc *amino.Codec, blockchain *minter.Blockchain, client *rpc.Local, minterCfg *config.Config, version string) *Service {
+	return &Service{cdc: cdc, blockchain: blockchain, client: client, minterCfg: minterCfg, version: version}
 }
 
 func (s *Service) getStateForHeight(height int32) (*state.State, error) {
